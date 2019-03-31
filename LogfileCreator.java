@@ -4,6 +4,9 @@ import java.util.*;
 /**
  * A class for creating log files of random data.
  * 
+ * @author Liam Marquis
+ * @version    2019.03.31
+ * 
  * @author David J. Barnes and Michael Kölling
  * @version    2016.02.29
  */
@@ -28,6 +31,9 @@ public class LogfileCreator
     public boolean createFile(String filename, int numEntries)
     {
         boolean success = false;
+        if (!filename.endsWith(".txt")){
+            filename += ".txt";
+        }
         
         if(numEntries > 0) {
             try (FileWriter writer = new FileWriter(filename)) {
@@ -37,8 +43,7 @@ public class LogfileCreator
                 }
                 Arrays.sort(entries);
                 for(int i = 0; i < numEntries; i++) {
-                    writer.write(entries[i].toString());
-                    writer.write('\n');
+                    writer.write(entries[i].toString()+System.lineSeparator());
                 }
                 
                 success = true;
@@ -46,7 +51,6 @@ public class LogfileCreator
             catch(IOException e) {
                 System.err.println("There was a problem writing to " + filename);
             }
-                
         }
         return success;
     }

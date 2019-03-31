@@ -41,6 +41,9 @@ public class LogAnalyzer
     { 
         // Create the array object to hold the hourly
         // access counts.
+        if (!fileName.endsWith(".txt")){
+            fileName += ".txt";
+        }
         dayCounts = new int[32];
         hourCounts = new int[24];
         monthCounts = new int[13];
@@ -96,6 +99,42 @@ public class LogAnalyzer
             }
         }
         return quietestDay;
+    }
+    
+    /**
+     * Finds the busiest month
+     * @return busiestMonth The busiest month
+     */
+    public int busiestMonth(){
+        analyzeMonthlyData();
+        int busiestMonth = 0;
+        int monthlyData = 0;
+        
+        for (int month = 0; month < monthCounts.length; month++){
+            if (monthCounts[month] > monthlyData && month != 0){
+                busiestMonth = month;
+                monthlyData = monthCounts[month];
+            }
+        }
+        return busiestMonth;
+    }
+    
+    /**
+     * Finds the quietest month
+     * @return quietestMonth The quietest month
+     */
+    public int quietestMonth(){
+        analyzeMonthlyData();
+        int quietestMonth = 0;
+        int monthlyData = 100000;
+        
+        for (int month = 0; month < monthCounts.length; month++){
+            if (monthCounts[month] < monthlyData && month != 0){
+                quietestMonth = month;
+                monthlyData = monthCounts[month];
+            }
+        }
+        return quietestMonth;
     }
     
     /**
