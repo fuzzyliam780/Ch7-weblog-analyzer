@@ -138,6 +138,24 @@ public class LogAnalyzer
     }
     
     /**
+     * Finds the average accesses per month
+     * @return quietestMonth The average accesses per month
+     */
+    public int averageAccessesPerMonth(){
+        analyzeMonthlyData();
+        int averageAccesses;
+        int totalAccesses = 0;
+        
+        for (int month = 0; month < monthCounts.length; month++){
+            if (month != 0){
+                totalAccesses += monthCounts[month];
+            }
+        }
+        averageAccesses = totalAccesses/12;
+        return averageAccesses;
+    }
+    
+    /**
      * Finds the busiest hour
      * @return busiestHour The busiest hour
      */
