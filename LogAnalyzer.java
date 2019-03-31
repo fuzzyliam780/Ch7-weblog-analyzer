@@ -9,6 +9,8 @@
  */
 public class LogAnalyzer
 {
+    // Where to calculate the daily access counts.
+    private int[] dayCounts;
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
     // Use a LogfileReader to access the data.
@@ -21,6 +23,7 @@ public class LogAnalyzer
     { 
         // Create the array object to hold the hourly
         // access counts.
+        dayCounts = new int[32];
         hourCounts = new int[24];
         // Create the reader to obtain the data.
         reader = new LogfileReader();
@@ -35,6 +38,7 @@ public class LogAnalyzer
     { 
         // Create the array object to hold the hourly
         // access counts.
+        dayCounts = new int[32];
         hourCounts = new int[24];
         // Create the reader to obtain the data.
         reader = new LogfileReader(fileName);
@@ -52,6 +56,25 @@ public class LogAnalyzer
         }while(reader.hasNext());
         
         return total;
+    }
+    
+    /**
+     * Finds the busiest day
+     * @return busiestHour The busiest day
+     */
+    public int busiestDay(){
+        analyzeDailyData();
+        int busiestDay = 0;
+        int dailyData = 0;
+        
+        for (int day = 0; day < dayCounts.length; day++){
+            if (dayCounts[day] > dailyData){
+                busiestDay = day;
+                dailyData = dayCounts[day];
+            }
+            System.out.println(day+" "+dayCounts[day]);
+        }
+        return busiestDay;
     }
     
     /**
@@ -117,6 +140,18 @@ public class LogAnalyzer
             LogEntry entry = reader.next();
             int hour = entry.getHour();
             hourCounts[hour]++;
+        }
+    }
+
+    /**
+     * Analyze the daily access data from the log file.
+     */
+    public void analyzeDailyData()
+    {
+        while(reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int day = entry.getDay();
+            dayCounts[day]++;
         }
     }
 
