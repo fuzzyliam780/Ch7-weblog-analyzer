@@ -60,7 +60,7 @@ public class LogAnalyzer
     
     /**
      * Finds the busiest day
-     * @return busiestHour The busiest day
+     * @return busiestDay The busiest day
      */
     public int busiestDay(){
         analyzeDailyData();
@@ -68,13 +68,30 @@ public class LogAnalyzer
         int dailyData = 0;
         
         for (int day = 0; day < dayCounts.length; day++){
-            if (dayCounts[day] > dailyData){
+            if (dayCounts[day] > dailyData && day != 0){
                 busiestDay = day;
                 dailyData = dayCounts[day];
             }
-            System.out.println(day+" "+dayCounts[day]);
         }
         return busiestDay;
+    }
+    
+    /**
+     * Finds the quietest day
+     * @return quietestDay The quietest day
+     */
+    public int quietestDay(){
+        analyzeDailyData();
+        int quietestDay = 0;
+        int dailyData = 100000;
+        
+        for (int day = 0; day < dayCounts.length; day++){
+            if (dayCounts[day] < dailyData && day != 0){
+                quietestDay = day;
+                dailyData = dayCounts[day];
+            }
+        }
+        return quietestDay;
     }
     
     /**
