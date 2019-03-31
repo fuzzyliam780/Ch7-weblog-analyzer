@@ -73,8 +73,26 @@ public class LogAnalyzer
     }
     
     /**
-     * Finds the busiest hour
-     * @return busiestHour The busiest hour
+     * Finds the busiest two hour period
+     * @return busiestHour The busiest two hour period
+     */
+    public int busiestTwoHour(){
+        analyzeHourlyData();
+        int busiestHour = 0;
+        int hourlyData = 0;
+        
+        for (int hour = 0; hour < hourCounts.length; hour+=2){
+            if (hourCounts[hour]+hourCounts[hour+1] > hourlyData){
+                busiestHour = hour;
+                hourlyData = hourCounts[hour];
+            }
+        }
+        return busiestHour;
+    }
+    
+    /**
+     * Finds the quietest hour
+     * @return quietestHour The quietest hour
      */
     public int quietestHour(){
         analyzeHourlyData();
