@@ -71,6 +71,24 @@ public class LogAnalyzer
         }
         return busiestHour;
     }
+    
+    /**
+     * Finds the busiest hour
+     * @return busiestHour The busiest hour
+     */
+    public int quietestHour(){
+        analyzeHourlyData();
+        int busiestHour = 0;
+        int hourlyData = 100000;
+        
+        for (int hour = 0; hour < hourCounts.length; hour++){
+            if (hourCounts[hour] < hourlyData){
+                busiestHour = hour;
+                hourlyData = hourCounts[hour];
+            }
+        }
+        return busiestHour;
+    }
 
     /**
      * Analyze the hourly access data from the log file.
