@@ -13,6 +13,8 @@ public class LogAnalyzer
     private int[] dayCounts;
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
+    // Where to calculate the monthly access counts.
+    private int[] monthCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
 
@@ -25,6 +27,7 @@ public class LogAnalyzer
         // access counts.
         dayCounts = new int[32];
         hourCounts = new int[24];
+        monthCounts = new int[13];
         // Create the reader to obtain the data.
         reader = new LogfileReader();
     }
@@ -40,6 +43,7 @@ public class LogAnalyzer
         // access counts.
         dayCounts = new int[32];
         hourCounts = new int[24];
+        monthCounts = new int[13];
         // Create the reader to obtain the data.
         reader = new LogfileReader(fileName);
     }
@@ -113,6 +117,19 @@ public class LogAnalyzer
     }
     
     /**
+     * Finds the total access for a month
+     * @param month The month
+     */
+    public int totalAccessesPerMonth(int month){
+        int totalAccesses = 0;
+        
+        analyzeMonthlyData();
+        totalAccesses = monthCounts[month];
+        
+        return totalAccesses;
+    }
+    
+    /**
      * Finds the busiest two hour period
      * @return busiestHour The busiest two hour period
      */
@@ -157,6 +174,18 @@ public class LogAnalyzer
             LogEntry entry = reader.next();
             int hour = entry.getHour();
             hourCounts[hour]++;
+        }
+    }
+
+    /**
+     * Analyze the monthly access data from the log file.
+     */
+    public void analyzeMonthlyData()
+    {
+        while(reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int month = entry.getMonth();
+            monthCounts[month]++;
         }
     }
 
