@@ -130,6 +130,21 @@ public class LogAnalyzer
     }
     
     /**
+     * Finds the total access for a month
+     * @param month The month
+     */
+    public void totalAccessesPerMonth(){
+        int totalAccesses = 0;
+        
+        analyzeMonthlyData();
+        for (int month = 0; month < monthCounts.length;month++){
+            if (month > 0){
+                System.out.println(month+": "+monthCounts[month]);
+            }
+        }
+    }
+    
+    /**
      * Finds the busiest two hour period
      * @return busiestHour The busiest two hour period
      */
