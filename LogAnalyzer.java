@@ -40,6 +40,9 @@ public class LogAnalyzer
         reader = new LogfileReader(fileName);
     }
     
+    /**
+     * Finds the total number of accesses
+     */
     public int numberOfAccesses(){
         int total = 0;
         
@@ -49,6 +52,24 @@ public class LogAnalyzer
         }while(reader.hasNext());
         
         return total;
+    }
+    
+    /**
+     * Finds the busiest hour
+     * @return busiestHour The busiest hour
+     */
+    public int busiestHour(){
+        analyzeHourlyData();
+        int busiestHour = 0;
+        int hourlyData = 0;
+        
+        for (int hour = 0; hour < hourCounts.length; hour++){
+            if (hourCounts[hour] > hourlyData){
+                busiestHour = hour;
+                hourlyData = hourCounts[hour];
+            }
+        }
+        return busiestHour;
     }
 
     /**
